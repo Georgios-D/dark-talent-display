@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Github, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// GitHub username constant - replace with your GitHub username
+// GitHub username constant - replace with your actual GitHub username
 const GITHUB_USERNAME = 'gdimitriad';
 
 const Navbar = () => {

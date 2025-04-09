@@ -1,11 +1,13 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Github, ExternalLink, MoreVertical, GitFork, Star, Code2, Eye } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
+import GithubTokenInput from './GithubTokenInput';
 
 interface Repository {
   id: number;
@@ -26,6 +28,7 @@ const Projects = () => {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('All');
+  const [githubToken, setGithubToken] = useState<string | null>(null);
   const { toast } = useToast();
   
   const GITHUB_USERNAME = 'gdimitriad';
@@ -33,7 +36,17 @@ const Projects = () => {
   const fetchRepositories = async (username: string) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
+      setError('');
+      
+      // Create headers object with token if available
+      const headers: HeadersInit = {};
+      if (githubToken) {
+        headers['Authorization'] = `token ${githubToken}`;
+      }
+      
+      const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`, {
+        headers
+      });
       
       if (!response.ok) {
         throw new Error(`GitHub API responded with status: ${response.status}`);
@@ -62,8 +75,10 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    fetchRepositories(GITHUB_USERNAME);
-  }, []);
+    if (githubToken || !localStorage.getItem('github_token')) {
+      fetchRepositories(GITHUB_USERNAME);
+    }
+  }, [githubToken]);
 
   useEffect(() => {
     let result = repos;
@@ -93,6 +108,10 @@ const Projects = () => {
     });
   };
 
+  const handleTokenSaved = (token: string) => {
+    setGithubToken(token);
+  };
+
   const getLanguageColor = (language: string | null) => {
     if (!language) return 'bg-gray-400/20 border-gray-400/50 text-gray-400';
     
@@ -119,12 +138,14 @@ const Projects = () => {
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold mb-4">My <span className="gradient-text">Projects</span></h2>
-          <p className="text-portfolio-light max-w-2xl mx-auto mb-8">
+          <p className="text-portfolio-light max-w-2xl mx-auto mb-4">
             Browse through my GitHub repositories. These projects showcase my skills, coding style,
             and the technologies I work with.
           </p>
           
-          <div className="flex flex-col md:flex-row gap-4 max-w-3xl mx-auto mb-8">
+          <GithubTokenInput onTokenSaved={handleTokenSaved} />
+          
+          <div className="flex flex-col md:flex-row gap-4 max-w-3xl mx-auto mt-8 mb-8">
             <Input
               placeholder="Search repositories..."
               value={searchTerm}
