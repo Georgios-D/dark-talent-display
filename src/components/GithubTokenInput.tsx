@@ -1,9 +1,9 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Info } from 'lucide-react';
 
 const GithubTokenInput = () => {
   const [open, setOpen] = useState(false);
@@ -22,21 +22,22 @@ const GithubTokenInput = () => {
           size="sm" 
           className="flex items-center gap-2"
         >
-          <ExternalLink size={16} />
-          View GitHub Docs
+          <Info size={16} />
+          GitHub API Info
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>GitHub Public API Access</DialogTitle>
+          <DialogTitle>Secure GitHub API Access</DialogTitle>
           <DialogDescription>
-            This application uses GitHub's public API to fetch repository data. No authentication is required.
+            This application uses a secure server-side connection to GitHub's API with authentication.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <p className="text-sm text-muted-foreground">
-            The GitHub API has rate limits for unauthenticated requests (60 requests per hour per IP address).
-            This is typically sufficient for normal usage.
+            Your requests are securely routed through a server using a GitHub token, 
+            which allows for higher rate limits (5,000 requests per hour) and 
+            protects the token from being exposed in the browser.
           </p>
           <div className="flex justify-center">
             <Button 

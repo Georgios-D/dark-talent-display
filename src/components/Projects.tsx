@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +8,7 @@ import { Github, ExternalLink, MoreVertical, GitFork, Star, Code2, Eye } from 'l
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import GithubTokenInput from './GithubTokenInput';
+import { supabase } from "@/integrations/supabase/client";
 
 interface Repository {
   id: number;
@@ -41,13 +43,18 @@ const Projects = () => {
       setIsLoading(true);
       setError('');
       
-      const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
+      // Call the Supabase Edge Function instead of GitHub API directly
+      const { data, error: functionError } = await supabase.functions.invoke('fetch-github-repos', {
+        body: { username }
+      });
       
-      if (!response.ok) {
-        throw new Error(`GitHub API responded with status: ${response.status}`);
+      if (functionError) {
+        throw new Error(functionError.message || 'Error calling GitHub API');
       }
       
-      const data: Repository[] = await response.json();
+      if (!data) {
+        throw new Error('No data returned from GitHub API');
+      }
       
       setRepos(data);
       setFilteredRepos(data);
