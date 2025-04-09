@@ -4,6 +4,9 @@ import { cn } from '@/lib/utils';
 import { Github, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+// GitHub username constant - replace with your GitHub username
+const GITHUB_USERNAME = 'gdimitriad';
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,6 +27,9 @@ const Navbar = () => {
     { label: 'Projects', href: '#projects' },
     { label: 'Contact', href: '#contact' },
   ];
+
+  // GitHub profile URL
+  const githubUrl = `https://github.com/${GITHUB_USERNAME}`;
 
   return (
     <header
@@ -48,7 +54,7 @@ const Navbar = () => {
               {item.label}
             </a>
           ))}
-          <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
+          <a href={githubUrl} target="_blank" rel="noopener noreferrer">
             <Button variant="outline" size="icon" className="rounded-full">
               <Github className="h-5 w-5" />
             </Button>
@@ -80,7 +86,7 @@ const Navbar = () => {
               </a>
             ))}
             <a 
-              href="https://github.com/" 
+              href={githubUrl} 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-portfolio-light hover:text-white py-2"

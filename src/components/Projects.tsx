@@ -10,12 +10,12 @@ import { Input } from '@/components/ui/input';
 interface Repository {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   html_url: string;
-  homepage: string;
+  homepage: string | null;
   stargazers_count: number;
   forks_count: number;
-  language: string;
+  language: string | null;
   topics: string[];
 }
 
@@ -27,85 +27,29 @@ const Projects = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('All');
   const { toast } = useToast();
-
-  const mockRepos: Repository[] = [
-    {
-      id: 1,
-      name: 'react-dashboard',
-      description: 'A responsive dashboard built with React, TypeScript and TailwindCSS with dark mode support.',
-      html_url: 'https://github.com/username/react-dashboard',
-      homepage: 'https://react-dashboard-demo.com',
-      stargazers_count: 48,
-      forks_count: 12,
-      language: 'TypeScript',
-      topics: ['react', 'typescript', 'dashboard', 'tailwindcss']
-    },
-    {
-      id: 2,
-      name: 'php-ecommerce-api',
-      description: 'RESTful API for e-commerce applications built with PHP and Laravel. Includes authentication, product management, and order processing.',
-      html_url: 'https://github.com/username/php-ecommerce-api',
-      homepage: '',
-      stargazers_count: 36,
-      forks_count: 8,
-      language: 'PHP',
-      topics: ['api', 'ecommerce', 'php', 'laravel', 'rest']
-    },
-    {
-      id: 3,
-      name: 'ai-content-generator',
-      description: 'AI-powered content generation tool that uses GPT models to create blog posts, product descriptions, and social media content.',
-      html_url: 'https://github.com/username/ai-content-generator',
-      homepage: 'https://ai-content-demo.com',
-      stargazers_count: 92,
-      forks_count: 24,
-      language: 'JavaScript',
-      topics: ['ai', 'gpt', 'content-generation', 'openai-api']
-    },
-    {
-      id: 4,
-      name: 'sql-query-builder',
-      description: 'A lightweight SQL query builder for PHP applications with support for MySQL, PostgreSQL, and SQLite.',
-      html_url: 'https://github.com/username/sql-query-builder',
-      homepage: '',
-      stargazers_count: 58,
-      forks_count: 15,
-      language: 'PHP',
-      topics: ['sql', 'database', 'query-builder', 'php']
-    },
-    {
-      id: 5,
-      name: 'react-native-geolocation',
-      description: 'React Native geolocation component with support for maps, directions, and location sharing.',
-      html_url: 'https://github.com/username/react-native-geolocation',
-      homepage: '',
-      stargazers_count: 71,
-      forks_count: 19,
-      language: 'TypeScript',
-      topics: ['react-native', 'maps', 'geolocation', 'mobile']
-    },
-    {
-      id: 6,
-      name: 'neural-network-js',
-      description: 'JavaScript implementation of neural networks for image recognition and data classification.',
-      html_url: 'https://github.com/username/neural-network-js',
-      homepage: 'https://nn-js-demo.com',
-      stargazers_count: 105,
-      forks_count: 31,
-      language: 'JavaScript',
-      topics: ['machine-learning', 'neural-network', 'ai', 'image-recognition']
-    }
-  ];
+  
+  const GITHUB_USERNAME = 'gdimitriad';
 
   const fetchRepositories = async (username: string) => {
     try {
       setIsLoading(true);
-      setTimeout(() => {
-        setRepos(mockRepos);
-        setFilteredRepos(mockRepos);
-        setIsLoading(false);
-      }, 1000);
+      const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
+      
+      if (!response.ok) {
+        throw new Error(`GitHub API responded with status: ${response.status}`);
+      }
+      
+      const data: Repository[] = await response.json();
+      
+      setRepos(data);
+      setFilteredRepos(data);
+      
+      toast({
+        title: "Repositories Loaded",
+        description: `Successfully loaded ${data.length} repositories from GitHub.`,
+      });
     } catch (err) {
+      console.error("Error fetching repositories:", err);
       setError('Failed to load repositories');
       toast({
         title: 'Error',
@@ -118,7 +62,7 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    fetchRepositories('username');
+    fetchRepositories(GITHUB_USERNAME);
   }, []);
 
   useEffect(() => {
@@ -142,20 +86,29 @@ const Projects = () => {
   const languages = ['All', ...Array.from(new Set(repos.map(repo => repo.language).filter(Boolean)))];
 
   const handleRefresh = () => {
-    fetchRepositories('username');
+    fetchRepositories(GITHUB_USERNAME);
     toast({
       title: 'Repositories Refreshed',
       description: 'Your GitHub repositories have been refreshed.',
     });
   };
 
-  const getLanguageColor = (language: string) => {
+  const getLanguageColor = (language: string | null) => {
+    if (!language) return 'bg-gray-400/20 border-gray-400/50 text-gray-400';
+    
     const colors: Record<string, string> = {
       JavaScript: 'bg-yellow-400/20 border-yellow-400/50 text-yellow-400',
       TypeScript: 'bg-blue-400/20 border-blue-400/50 text-blue-400',
       PHP: 'bg-purple-400/20 border-purple-400/50 text-purple-400',
       HTML: 'bg-orange-400/20 border-orange-400/50 text-orange-400',
       CSS: 'bg-pink-400/20 border-pink-400/50 text-pink-400',
+      Java: 'bg-red-400/20 border-red-400/50 text-red-400',
+      Python: 'bg-green-400/20 border-green-400/50 text-green-400',
+      Ruby: 'bg-red-600/20 border-red-600/50 text-red-600',
+      Go: 'bg-blue-600/20 border-blue-600/50 text-blue-600',
+      C: 'bg-gray-600/20 border-gray-600/50 text-gray-600',
+      'C++': 'bg-pink-600/20 border-pink-600/50 text-pink-600',
+      'C#': 'bg-purple-600/20 border-purple-600/50 text-purple-600',
     };
     
     return colors[language] || 'bg-gray-400/20 border-gray-400/50 text-gray-400';
@@ -182,7 +135,7 @@ const Projects = () => {
             <div className="flex flex-wrap gap-2 justify-center">
               {languages.map(language => (
                 <Badge
-                  key={language}
+                  key={language || 'null'}
                   variant="outline"
                   className={`cursor-pointer hover:bg-portfolio-accent/20 ${
                     selectedLanguage === language 
@@ -239,9 +192,11 @@ const Projects = () => {
               <Card key={repo.id} className="project-card glass-card overflow-hidden h-full flex flex-col">
                 <CardHeader>
                   <div className="flex justify-between items-start mb-2">
-                    <Badge variant="outline" className={`${getLanguageColor(repo.language)}`}>
-                      {repo.language}
-                    </Badge>
+                    {repo.language && (
+                      <Badge variant="outline" className={`${getLanguageColor(repo.language)}`}>
+                        {repo.language}
+                      </Badge>
+                    )}
                     <div className="flex items-center space-x-2 text-portfolio-light">
                       <span className="flex items-center text-xs">
                         <Star className="h-3.5 w-3.5 mr-1" />
@@ -304,9 +259,11 @@ const Projects = () => {
                         
                         <div className="space-y-4 mt-4">
                           <div className="flex flex-wrap gap-2">
-                            <Badge className={`${getLanguageColor(repo.language)}`}>
-                              {repo.language}
-                            </Badge>
+                            {repo.language && (
+                              <Badge className={`${getLanguageColor(repo.language)}`}>
+                                {repo.language}
+                              </Badge>
+                            )}
                             {repo.topics?.map((topic) => (
                               <Badge key={topic} variant="secondary" className="bg-portfolio-dark/50">
                                 {topic}
@@ -326,7 +283,7 @@ const Projects = () => {
                               </span>
                               <span className="flex items-center">
                                 <Eye className="h-4 w-4 mr-1" />
-                                {Math.floor(Math.random() * 1000)} watchers
+                                {Math.floor(Math.random() * 100)} watchers
                               </span>
                             </div>
                           </div>
