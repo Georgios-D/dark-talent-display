@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { Key } from 'lucide-react';
 
@@ -68,7 +68,7 @@ const GithubTokenInput = ({ onTokenSaved }: GithubTokenInputProps) => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="flex items-center gap-2 mt-4"
+          className="flex items-center gap-2"
         >
           <Key size={16} />
           {savedToken ? "Change GitHub Token" : "Connect GitHub"}
@@ -77,6 +77,10 @@ const GithubTokenInput = ({ onTokenSaved }: GithubTokenInputProps) => {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{savedToken ? "Update GitHub Token" : "Connect to GitHub"}</DialogTitle>
+          <DialogDescription>
+            A GitHub Personal Access Token allows you to access the GitHub API with a higher rate limit
+            and access to private repositories (if needed).
+          </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <div className="space-y-2">

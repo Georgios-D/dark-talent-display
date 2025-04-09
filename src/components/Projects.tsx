@@ -29,11 +29,17 @@ const Projects = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('All');
   const [githubToken, setGithubToken] = useState<string | null>(null);
+  const [githubUsername, setGithubUsername] = useState<string>('');
   const { toast } = useToast();
-  
-  const GITHUB_USERNAME = 'gdimitriad';
 
+  // Define a function to fetch repositories
   const fetchRepositories = async (username: string) => {
+    if (!username) {
+      setError('Please enter a GitHub username');
+      setIsLoading(false);
+      return;
+    }
+    
     try {
       setIsLoading(true);
       setError('');
@@ -75,10 +81,17 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    if (githubToken || !localStorage.getItem('github_token')) {
-      fetchRepositories(GITHUB_USERNAME);
+    // Get username from localStorage
+    const storedUsername = localStorage.getItem('github_username');
+    if (storedUsername) {
+      setGithubUsername(storedUsername);
     }
-  }, [githubToken]);
+    
+    // Only fetch if we have a username
+    if (githubUsername || storedUsername) {
+      fetchRepositories(githubUsername || storedUsername || '');
+    }
+  }, [githubUsername, githubToken]);
 
   useEffect(() => {
     let result = repos;
@@ -101,7 +114,7 @@ const Projects = () => {
   const languages = ['All', ...Array.from(new Set(repos.map(repo => repo.language).filter(Boolean)))];
 
   const handleRefresh = () => {
-    fetchRepositories(GITHUB_USERNAME);
+    fetchRepositories(githubUsername);
     toast({
       title: 'Repositories Refreshed',
       description: 'Your GitHub repositories have been refreshed.',
@@ -110,6 +123,23 @@ const Projects = () => {
 
   const handleTokenSaved = (token: string) => {
     setGithubToken(token);
+  };
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGithubUsername(e.target.value);
+  };
+
+  const handleUsernameSubmit = () => {
+    if (githubUsername.trim()) {
+      localStorage.setItem('github_username', githubUsername);
+      fetchRepositories(githubUsername);
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Please enter a valid GitHub username',
+        variant: 'destructive',
+      });
+    }
   };
 
   const getLanguageColor = (language: string | null) => {
@@ -143,7 +173,21 @@ const Projects = () => {
             and the technologies I work with.
           </p>
           
-          <GithubTokenInput onTokenSaved={handleTokenSaved} />
+          <div className="flex flex-col items-center gap-3 mt-6 mb-8">
+            <div className="flex flex-col sm:flex-row items-center gap-3">
+              <Input
+                placeholder="GitHub Username"
+                value={githubUsername}
+                onChange={handleUsernameChange}
+                className="bg-portfolio-dark/30 border-portfolio-accent/30 w-full sm:max-w-xs"
+              />
+              <Button onClick={handleUsernameSubmit}>
+                Load Repositories
+              </Button>
+            </div>
+            
+            <GithubTokenInput onTokenSaved={handleTokenSaved} />
+          </div>
           
           <div className="flex flex-col md:flex-row gap-4 max-w-3xl mx-auto mt-8 mb-8">
             <Input
