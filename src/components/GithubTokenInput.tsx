@@ -84,7 +84,7 @@ const GithubTokenInput = ({ onTokenSaved }: GithubTokenInputProps) => {
             <Input
               id="github-token"
               type="password"
-              placeholder="ghp_xxxxxxxxxxxxxxxx"
+              placeholder="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"
               value={token}
               onChange={(e) => setToken(e.target.value)}
             />
