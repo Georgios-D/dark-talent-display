@@ -1,11 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { GitHubLogoIcon, ExternalLinkIcon, ViewVerticalIcon, GitForkIcon, StarIcon } from '@radix-ui/react-icons';
-import { Code2, Eye } from 'lucide-react';
+import { Github, ExternalLink, MoreVertical, GitFork, Star, Code2, Eye } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { Input } from '@/components/ui/input';
 
@@ -30,7 +28,6 @@ const Projects = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('All');
   const { toast } = useToast();
 
-  // Mock data for initial development
   const mockRepos: Repository[] = [
     {
       id: 1,
@@ -100,24 +97,14 @@ const Projects = () => {
     }
   ];
 
-  // Function to fetch repositories from GitHub
   const fetchRepositories = async (username: string) => {
     try {
       setIsLoading(true);
-      // In a real implementation, this would fetch from GitHub API
-      // For now, we'll use mock data
       setTimeout(() => {
         setRepos(mockRepos);
         setFilteredRepos(mockRepos);
         setIsLoading(false);
       }, 1000);
-      
-      // Uncomment for real implementation:
-      // const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
-      // if (!response.ok) throw new Error('Could not fetch repositories');
-      // const data = await response.json();
-      // setRepos(data);
-      // setFilteredRepos(data);
     } catch (err) {
       setError('Failed to load repositories');
       toast({
@@ -134,7 +121,6 @@ const Projects = () => {
     fetchRepositories('username');
   }, []);
 
-  // Filter repositories based on search term and language
   useEffect(() => {
     let result = repos;
     
@@ -153,10 +139,8 @@ const Projects = () => {
     setFilteredRepos(result);
   }, [searchTerm, selectedLanguage, repos]);
 
-  // Get unique languages from repositories
   const languages = ['All', ...Array.from(new Set(repos.map(repo => repo.language).filter(Boolean)))];
 
-  // Handle repository refresh
   const handleRefresh = () => {
     fetchRepositories('username');
     toast({
@@ -165,7 +149,6 @@ const Projects = () => {
     });
   };
 
-  // Function to determine badge color based on language
   const getLanguageColor = (language: string) => {
     const colors: Record<string, string> = {
       JavaScript: 'bg-yellow-400/20 border-yellow-400/50 text-yellow-400',
@@ -261,11 +244,11 @@ const Projects = () => {
                     </Badge>
                     <div className="flex items-center space-x-2 text-portfolio-light">
                       <span className="flex items-center text-xs">
-                        <StarIcon className="h-3.5 w-3.5 mr-1" />
+                        <Star className="h-3.5 w-3.5 mr-1" />
                         {repo.stargazers_count}
                       </span>
                       <span className="flex items-center text-xs">
-                        <GitForkIcon className="h-3.5 w-3.5 mr-1" />
+                        <GitFork className="h-3.5 w-3.5 mr-1" />
                         {repo.forks_count}
                       </span>
                     </div>
@@ -297,14 +280,14 @@ const Projects = () => {
                       rel="noopener noreferrer"
                       className="flex items-center text-portfolio-light hover:text-portfolio-accent transition-colors text-sm"
                     >
-                      <GitHubLogoIcon className="h-4 w-4 mr-1" />
+                      <Github className="h-4 w-4 mr-1" />
                       View Repository
                     </a>
                     
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button variant="ghost" size="sm">
-                          <ViewVerticalIcon className="h-4 w-4 mr-1" />
+                          <MoreVertical className="h-4 w-4 mr-1" />
                           Details
                         </Button>
                       </DialogTrigger>
@@ -334,11 +317,11 @@ const Projects = () => {
                           <div className="flex items-center justify-between text-portfolio-light">
                             <div className="flex items-center space-x-4">
                               <span className="flex items-center">
-                                <StarIcon className="h-4 w-4 mr-1" />
+                                <Star className="h-4 w-4 mr-1" />
                                 {repo.stargazers_count} stars
                               </span>
                               <span className="flex items-center">
-                                <GitForkIcon className="h-4 w-4 mr-1" />
+                                <GitFork className="h-4 w-4 mr-1" />
                                 {repo.forks_count} forks
                               </span>
                               <span className="flex items-center">
@@ -355,7 +338,7 @@ const Projects = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                <GitHubLogoIcon className="h-4 w-4 mr-2" />
+                                <Github className="h-4 w-4 mr-2" />
                                 View on GitHub
                               </a>
                             </Button>
@@ -367,7 +350,7 @@ const Projects = () => {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                 >
-                                  <ExternalLinkIcon className="h-4 w-4 mr-2" />
+                                  <ExternalLink className="h-4 w-4 mr-2" />
                                   Live Demo
                                 </a>
                               </Button>

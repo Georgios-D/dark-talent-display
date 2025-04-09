@@ -1,5 +1,5 @@
 
-import { ArrowRightIcon } from '@radix-ui/react-icons';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 
@@ -49,7 +49,7 @@ const Hero = () => {
           
           <div className="flex flex-wrap gap-4">
             <Button className="bg-portfolio-accent hover:bg-portfolio-highlight text-white">
-              View My Projects <ArrowRightIcon className="ml-2" />
+              View My Projects <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button variant="outline" className="border-portfolio-accent text-portfolio-light hover:bg-portfolio-accent/10">
               Download Resume

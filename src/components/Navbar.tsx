@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import { Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 
@@ -51,7 +51,7 @@ const Navbar = () => {
           ))}
           <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
             <Button variant="outline" size="icon" className="rounded-full">
-              <GitHubLogoIcon className="h-5 w-5" />
+              <Github className="h-5 w-5" />
             </Button>
           </a>
         </nav>
