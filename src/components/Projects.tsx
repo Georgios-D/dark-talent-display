@@ -43,17 +43,23 @@ const Projects = () => {
       setIsLoading(true);
       setError('');
       
-      // Call the Supabase Edge Function instead of GitHub API directly
+      // Call the Supabase Edge Function
       const { data, error: functionError } = await supabase.functions.invoke('fetch-github-repos', {
         body: { username }
       });
       
       if (functionError) {
+        console.error("Edge function error:", functionError);
         throw new Error(functionError.message || 'Error calling GitHub API');
       }
       
       if (!data) {
         throw new Error('No data returned from GitHub API');
+      }
+      
+      if (data.error) {
+        console.error("GitHub API error:", data.error);
+        throw new Error(data.error);
       }
       
       setRepos(data);
@@ -65,10 +71,10 @@ const Projects = () => {
       });
     } catch (err) {
       console.error("Error fetching repositories:", err);
-      setError('Failed to load repositories');
+      setError(err.message || 'Failed to load repositories');
       toast({
         title: 'Error',
-        description: 'Failed to load GitHub repositories. Please try again later.',
+        description: err.message || 'Failed to load GitHub repositories. Please try again later.',
         variant: 'destructive',
       });
     } finally {
@@ -106,10 +112,6 @@ const Projects = () => {
 
   const handleRefresh = () => {
     fetchRepositories(githubUsername);
-    toast({
-      title: 'Repositories Refreshed',
-      description: 'Your GitHub repositories have been refreshed.',
-    });
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,8 +170,8 @@ const Projects = () => {
                 onChange={handleUsernameChange}
                 className="bg-portfolio-dark/30 border-portfolio-accent/30 w-full sm:max-w-xs"
               />
-              <Button onClick={handleUsernameSubmit}>
-                Load Repositories
+              <Button onClick={handleUsernameSubmit} disabled={isLoading}>
+                {isLoading ? 'Loading...' : 'Load Repositories'}
               </Button>
             </div>
             
@@ -234,6 +236,9 @@ const Projects = () => {
         ) : error ? (
           <div className="text-center text-red-400 p-8 glass-card">
             <p>{error}</p>
+            <p className="text-sm text-gray-400 mt-2">
+              Make sure the GitHub username is correct and the account has public repositories.
+            </p>
             <Button onClick={handleRefresh} className="mt-4">
               Try Again
             </Button>

@@ -21,9 +21,12 @@ serve(async (req) => {
       );
     }
 
+    // GitHub usernames cannot contain spaces, trim and sanitize
+    const sanitizedUsername = encodeURIComponent(username.trim());
+    
     const GITHUB_TOKEN = Deno.env.get('GITHUB_TOKEN');
     
-    const url = `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`;
+    const url = `https://api.github.com/users/${sanitizedUsername}/repos?sort=updated&per_page=100`;
     
     const headers: HeadersInit = {
       'Accept': 'application/vnd.github.v3+json',
@@ -34,14 +37,16 @@ serve(async (req) => {
       headers['Authorization'] = `token ${GITHUB_TOKEN}`;
     }
     
-    console.log(`Fetching GitHub repositories for username: ${username}`);
+    console.log(`Fetching GitHub repositories for username: ${sanitizedUsername}`);
     const response = await fetch(url, { headers });
     
     if (!response.ok) {
-      console.error(`GitHub API error: ${response.status}`);
+      const errorText = await response.text();
+      console.error(`GitHub API error: ${response.status}\n${errorText}`);
       return new Response(
         JSON.stringify({ 
-          error: `GitHub API responded with status: ${response.status}` 
+          error: `GitHub API responded with status: ${response.status}`, 
+          details: errorText
         }),
         { 
           status: response.status, 
