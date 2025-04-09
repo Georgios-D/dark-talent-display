@@ -1,6 +1,5 @@
-
 import { Card, CardContent } from '@/components/ui/card';
-import { Code, Database, Layout, ShoppingBag, Tool } from 'lucide-react';
+import { Code, Database, Layout, ShoppingBag, Wrench } from 'lucide-react';
 
 const Skills = () => {
   const skillCategories = [
@@ -21,7 +20,7 @@ const Skills = () => {
     },
     {
       title: 'Tools',
-      icon: <Tool className="h-5 w-5 text-portfolio-highlight" />,
+      icon: <Wrench className="h-5 w-5 text-portfolio-highlight" />,
       skills: ['Git', 'GitHub', 'Require.js']
     },
     {
