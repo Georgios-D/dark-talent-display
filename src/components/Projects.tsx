@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -24,15 +23,13 @@ interface Repository {
 const Projects = () => {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [filteredRepos, setFilteredRepos] = useState<Repository[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('All');
-  const [githubToken, setGithubToken] = useState<string | null>(null);
   const [githubUsername, setGithubUsername] = useState<string>('');
   const { toast } = useToast();
 
-  // Define a function to fetch repositories
   const fetchRepositories = async (username: string) => {
     if (!username) {
       setError('Please enter a GitHub username');
@@ -44,15 +41,7 @@ const Projects = () => {
       setIsLoading(true);
       setError('');
       
-      // Create headers object with token if available
-      const headers: HeadersInit = {};
-      if (githubToken) {
-        headers['Authorization'] = `token ${githubToken}`;
-      }
-      
-      const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`, {
-        headers
-      });
+      const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
       
       if (!response.ok) {
         throw new Error(`GitHub API responded with status: ${response.status}`);
@@ -81,17 +70,12 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    // Get username from localStorage
     const storedUsername = localStorage.getItem('github_username');
     if (storedUsername) {
       setGithubUsername(storedUsername);
+      fetchRepositories(storedUsername);
     }
-    
-    // Only fetch if we have a username
-    if (githubUsername || storedUsername) {
-      fetchRepositories(githubUsername || storedUsername || '');
-    }
-  }, [githubUsername, githubToken]);
+  }, []);
 
   useEffect(() => {
     let result = repos;
@@ -119,10 +103,6 @@ const Projects = () => {
       title: 'Repositories Refreshed',
       description: 'Your GitHub repositories have been refreshed.',
     });
-  };
-
-  const handleTokenSaved = (token: string) => {
-    setGithubToken(token);
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,7 +166,7 @@ const Projects = () => {
               </Button>
             </div>
             
-            <GithubTokenInput onTokenSaved={handleTokenSaved} />
+            <GithubTokenInput />
           </div>
           
           <div className="flex flex-col md:flex-row gap-4 max-w-3xl mx-auto mt-8 mb-8">

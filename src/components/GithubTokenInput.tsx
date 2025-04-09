@@ -1,64 +1,16 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { Key } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
-interface GithubTokenInputProps {
-  onTokenSaved: (token: string) => void;
-}
-
-const GithubTokenInput = ({ onTokenSaved }: GithubTokenInputProps) => {
-  const [token, setToken] = useState('');
-  const [savedToken, setSavedToken] = useState<string | null>(null);
+const GithubTokenInput = () => {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
-  // Check for existing token on component mount
-  useEffect(() => {
-    const storedToken = localStorage.getItem('github_token');
-    if (storedToken) {
-      setSavedToken(storedToken);
-      onTokenSaved(storedToken);
-    }
-  }, [onTokenSaved]);
-
-  const handleSaveToken = () => {
-    if (!token.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a valid GitHub token",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Save token to localStorage
-    localStorage.setItem('github_token', token);
-    setSavedToken(token);
-    onTokenSaved(token);
-    
-    toast({
-      title: "Success",
-      description: "GitHub token saved successfully",
-    });
-    
-    setToken('');
-    setOpen(false);
-  };
-
-  const handleRemoveToken = () => {
-    localStorage.removeItem('github_token');
-    setSavedToken(null);
-    
-    toast({
-      title: "Token Removed",
-      description: "GitHub token has been removed",
-    });
-    
+  const handleOpenGitHub = () => {
+    window.open('https://github.com', '_blank');
     setOpen(false);
   };
 
@@ -70,47 +22,29 @@ const GithubTokenInput = ({ onTokenSaved }: GithubTokenInputProps) => {
           size="sm" 
           className="flex items-center gap-2"
         >
-          <Key size={16} />
-          {savedToken ? "Change GitHub Token" : "Connect GitHub"}
+          <ExternalLink size={16} />
+          View GitHub Docs
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{savedToken ? "Update GitHub Token" : "Connect to GitHub"}</DialogTitle>
+          <DialogTitle>GitHub Public API Access</DialogTitle>
           <DialogDescription>
-            A GitHub Personal Access Token allows you to access the GitHub API with a higher rate limit
-            and access to private repositories (if needed).
+            This application uses GitHub's public API to fetch repository data. No authentication is required.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Label htmlFor="github-token">GitHub Personal Access Token</Label>
-            <Input
-              id="github-token"
-              type="password"
-              placeholder="ghp_xxxxxxxxxxxxxxxx"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-            />
-            <p className="text-sm text-muted-foreground">
-              This token will be stored locally in your browser and will only be used to fetch your GitHub repositories.
-            </p>
-          </div>
-          <div className="flex justify-between">
+          <p className="text-sm text-muted-foreground">
+            The GitHub API has rate limits for unauthenticated requests (60 requests per hour per IP address).
+            This is typically sufficient for normal usage.
+          </p>
+          <div className="flex justify-center">
             <Button 
               variant="default" 
-              onClick={handleSaveToken}
+              onClick={handleOpenGitHub}
             >
-              Save Token
+              Open GitHub
             </Button>
-            {savedToken && (
-              <Button 
-                variant="destructive" 
-                onClick={handleRemoveToken}
-              >
-                Remove Token
-              </Button>
-            )}
           </div>
         </div>
       </DialogContent>
