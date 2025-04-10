@@ -55,7 +55,7 @@ const About = () => {
                 </p>
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  Redux / Context API
+                  Knockout.js
                 </p>
               </div>
             </div>
@@ -76,19 +76,19 @@ const About = () => {
               <div className="space-y-2">
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  Node.js / Express
+                  Node.js
                 </p>
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  PHP / Laravel
+                  PHP
                 </p>
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  RESTful APIs
+                  XML
                 </p>
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  GraphQL
+                  Apache / Nginx
                 </p>
               </div>
             </div>
@@ -108,19 +108,51 @@ const About = () => {
               <div className="space-y-2">
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  MySQL / PostgreSQL
+                  MySQL / MariaDB
                 </p>
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  MongoDB
+                  Supabase
                 </p>
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  Redis
+                  Elasticsearch / OpenSearch
                 </p>
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
-                  Supabase / Firebase
+                  SQL
+                </p>
+              </div>
+            </div>
+
+            {/* E-commerce Card */}
+            <div className="glass-card p-6 hover:shadow-lg transition-all duration-300">
+              <h4 className="text-lg font-semibold mb-3 flex items-center">
+                <span className="bg-portfolio-accent/20 p-2 rounded-md mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-portfolio-accent">
+                    <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" />
+                    <path d="M12 6v12" />
+                    <path d="M6 12h12" />
+                  </svg>
+                </span>
+                E-commerce
+              </h4>
+              <div className="space-y-2">
+                <p className="text-sm text-portfolio-light flex items-center">
+                  <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
+                  Magento / Adobe Commerce
+                </p>
+                <p className="text-sm text-portfolio-light flex items-center">
+                  <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
+                  Shopify
+                </p>
+                <p className="text-sm text-portfolio-light flex items-center">
+                  <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
+                  Adobe Live Search
+                </p>
+                <p className="text-sm text-portfolio-light flex items-center">
+                  <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
+                  Liquid
                 </p>
               </div>
             </div>
@@ -153,6 +185,37 @@ const About = () => {
                 <p className="text-sm text-portfolio-light flex items-center">
                   <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
                   CI/CD Pipelines
+                </p>
+              </div>
+            </div>
+            
+            {/* AI & Integration Card */}
+            <div className="glass-card p-6 hover:shadow-lg transition-all duration-300">
+              <h4 className="text-lg font-semibold mb-3 flex items-center">
+                <span className="bg-portfolio-accent/20 p-2 rounded-md mr-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-portfolio-accent">
+                    <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
+                    <path d="M7 7h.01" />
+                  </svg>
+                </span>
+                AI & Integration
+              </h4>
+              <div className="space-y-2">
+                <p className="text-sm text-portfolio-light flex items-center">
+                  <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
+                  Adobe Live Search
+                </p>
+                <p className="text-sm text-portfolio-light flex items-center">
+                  <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
+                  API Integration
+                </p>
+                <p className="text-sm text-portfolio-light flex items-center">
+                  <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
+                  Lovable AI
+                </p>
+                <p className="text-sm text-portfolio-light flex items-center">
+                  <span className="w-2 h-2 bg-portfolio-accent rounded-full mr-2"></span>
+                  ChatGPT / Grok / Windsurf
                 </p>
               </div>
             </div>

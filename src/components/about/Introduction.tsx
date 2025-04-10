@@ -23,8 +23,12 @@ const Introduction = () => {
         <span className="tech-tag">Node.js</span>
         <span className="tech-tag">Knockout.js</span>
         <span className="tech-tag">Magento</span>
+        <span className="tech-tag">Shopify</span>
         <span className="tech-tag">Adobe Live Search</span>
-        <span className="tech-tag">Composer</span>
+        <span className="tech-tag">MariaDB</span>
+        <span className="tech-tag">Supabase</span>
+        <span className="tech-tag">XML</span>
+        <span className="tech-tag">Liquid</span>
       </div>
     </div>
   );
