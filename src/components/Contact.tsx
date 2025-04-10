@@ -123,14 +123,14 @@ const Contact = () => {
                 <div className="space-y-4">
                   <div className="flex items-center text-portfolio-light">
                     <AtSign className="h-5 w-5 mr-3 text-portfolio-accent" />
-                    <a href="mailto:your.email@example.com" className="hover:text-portfolio-accent transition-colors">
-                      your.email@example.com
+                    <a href="mailto:georgios97@gmail.com" className="hover:text-portfolio-accent transition-colors">
+                      georgios97@gmail.com
                     </a>
                   </div>
                   
                   <div className="flex items-center text-portfolio-light">
                     <MapPin className="h-5 w-5 mr-3 text-portfolio-accent" />
-                    <span>Your Location</span>
+                    <span>Stockholm, Sverige</span>
                   </div>
                 </div>
               </CardContent>

@@ -10,12 +10,12 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <a href="#home" className="text-xl font-bold gradient-text">
-              Portfolio<span className="text-portfolio-accent">.</span>
+              Georgios Dimitriadis<span className="text-portfolio-accent">.</span>
             </a>
           </div>
           
           <div className="flex items-center text-portfolio-light text-sm">
-            <span>© {currentYear} All Rights Reserved</span>
+            <span>© {currentYear} Georgios Dimitriadis. All Rights Reserved</span>
             <span className="mx-2">|</span>
             <span className="flex items-center">
               Made with <HeartIcon className="h-4 w-4 mx-1 text-portfolio-accent" /> and React
