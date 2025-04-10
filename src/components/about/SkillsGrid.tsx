@@ -54,6 +54,8 @@ const SkillsGrid = () => {
       icon: <Database className="h-5 w-5 text-portfolio-highlight" />,
       items: [
         { name: 'MySQL', level: 85 },
+        { name: 'MariaDB', level: 80 },
+        { name: 'Supabase', level: 75 },
       ],
     },
     {
