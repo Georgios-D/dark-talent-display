@@ -43,7 +43,7 @@ const Navbar = () => {
           <img 
             src="/lovable-uploads/b9cf70bd-5c9f-44ce-9c04-21cb8ee8c0ab.png" 
             alt="Georgios Dimitriadis Logo" 
-            className="h-10 w-auto"
+            className="h-14 w-auto" // Changed from h-10 to h-14 to make the logo bigger
           />
         </a>
 
