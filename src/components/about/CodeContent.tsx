@@ -28,11 +28,12 @@ const CodeContent = ({ codeSnippets, activeTab, setActiveTab }: CodeContentProps
       onTouchStart={isMobile ? onTouchStart : undefined}
       onTouchMove={isMobile ? onTouchMove : undefined}
       onTouchEnd={isMobile ? onTouchEnd : undefined}
+      className="relative"
     >
       {codeSnippets.map((snippet) => (
         <TabsContent key={snippet.language} value={snippet.language} className="m-0">
-          <ScrollArea className="max-h-[300px]">
-            <pre className="code-block text-sm font-fira-code">
+          <ScrollArea className="h-[300px] overflow-auto">
+            <pre className="code-block text-sm font-fira-code p-4">
               <code>{snippet.code}</code>
             </pre>
           </ScrollArea>
