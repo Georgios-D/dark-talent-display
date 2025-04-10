@@ -1,3 +1,4 @@
+
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
@@ -111,7 +112,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in">
-              I'm here to help you build with <span className="gradient-text">passion & expertise in...</span>
+              Crafting digital solutions with <span className="gradient-text">expertise in...</span>
             </h1>
             
             <div className="h-8 mb-6 bg-portfolio-accent/5 px-4 py-6 rounded-md border border-portfolio-accent/20 flex items-center">
