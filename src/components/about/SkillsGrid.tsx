@@ -43,6 +43,7 @@ const SkillsGrid = () => {
       icon: <ShoppingBag className="h-5 w-5 text-portfolio-highlight" />,
       items: [
         { name: 'Magento/Adobe Commerce', level: 85 },
+        { name: 'Shopify', level: 80 },
         { name: 'E-commerce APIs', level: 80 },
         { name: 'Payment Gateways', level: 75 },
         { name: 'Adobe Live Search', level: 80 },
