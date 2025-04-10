@@ -3,12 +3,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Github, ExternalLink, MoreVertical, GitFork, Star, Code2, Eye } from 'lucide-react';
+import { Github, ExternalLink, MoreVertical, GitFork, Star, Code2, Eye, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import GithubTokenInput from './GithubTokenInput';
 import { supabase } from "@/integrations/supabase/client";
 import { GITHUB_USERNAME } from './Navbar';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface Repository {
   id: number;
@@ -30,13 +32,13 @@ const Projects = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('All');
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const fetchRepositories = async () => {
     try {
       setIsLoading(true);
       setError('');
       
-      // Call the Supabase Edge Function with the static GitHub username
       const { data, error: functionError } = await supabase.functions.invoke('fetch-github-repos', {
         body: { username: GITHUB_USERNAME }
       });
@@ -76,7 +78,6 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    // Load repositories on component mount using the static GitHub username
     fetchRepositories();
   }, []);
 
@@ -124,6 +125,219 @@ const Projects = () => {
     
     return colors[language] || 'bg-gray-400/20 border-gray-400/50 text-gray-400';
   };
+
+  const renderProjectCard = (repo: Repository) => (
+    <Card key={repo.id} className="project-card glass-card overflow-hidden h-full flex flex-col">
+      <CardHeader>
+        <div className="flex justify-between items-start mb-2">
+          {repo.language && (
+            <Badge variant="outline" className={`${getLanguageColor(repo.language)}`}>
+              {repo.language}
+            </Badge>
+          )}
+          <div className="flex items-center space-x-2 text-portfolio-light">
+            <span className="flex items-center text-xs">
+              <Star className="h-3.5 w-3.5 mr-1" />
+              {repo.stargazers_count}
+            </span>
+            <span className="flex items-center text-xs">
+              <GitFork className="h-3.5 w-3.5 mr-1" />
+              {repo.forks_count}
+            </span>
+          </div>
+        </div>
+        <CardTitle className="text-xl">{repo.name}</CardTitle>
+        <CardDescription className="text-portfolio-light line-clamp-2">
+          {repo.description || 'No description provided'}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <div className="flex flex-wrap gap-1 mt-2">
+          {repo.topics?.slice(0, 4).map((topic) => (
+            <Badge key={topic} variant="secondary" className="bg-portfolio-dark/50 text-xs">
+              {topic}
+            </Badge>
+          ))}
+          {repo.topics?.length > 4 && (
+            <Badge variant="secondary" className="bg-portfolio-dark/50 text-xs">
+              +{repo.topics.length - 4} more
+            </Badge>
+          )}
+        </div>
+      </CardContent>
+      <CardFooter className="pt-0">
+        <div className="flex items-center justify-between w-full">
+          <a 
+            href={repo.html_url} 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center text-portfolio-light hover:text-portfolio-accent transition-colors text-sm"
+          >
+            <Github className="h-4 w-4 mr-1" />
+            View Repository
+          </a>
+          
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm">
+                <MoreVertical className="h-4 w-4 mr-1" />
+                Details
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="glass-card max-w-3xl">
+              <DialogHeader>
+                <DialogTitle className="text-xl flex items-center">
+                  <Code2 className="h-5 w-5 mr-2 text-portfolio-accent" />
+                  {repo.name}
+                </DialogTitle>
+                <DialogDescription className="text-portfolio-light">
+                  {repo.description}
+                </DialogDescription>
+              </DialogHeader>
+              
+              <div className="space-y-4 mt-4">
+                <div className="flex flex-wrap gap-2">
+                  {repo.language && (
+                    <Badge className={`${getLanguageColor(repo.language)}`}>
+                      {repo.language}
+                    </Badge>
+                  )}
+                  {repo.topics?.map((topic) => (
+                    <Badge key={topic} variant="secondary" className="bg-portfolio-dark/50">
+                      {topic}
+                    </Badge>
+                  ))}
+                </div>
+                
+                <div className="flex items-center justify-between text-portfolio-light">
+                  <div className="flex items-center space-x-4">
+                    <span className="flex items-center">
+                      <Star className="h-4 w-4 mr-1" />
+                      {repo.stargazers_count} stars
+                    </span>
+                    <span className="flex items-center">
+                      <GitFork className="h-4 w-4 mr-1" />
+                      {repo.forks_count} forks
+                    </span>
+                    <span className="flex items-center">
+                      <Eye className="h-4 w-4 mr-1" />
+                      {Math.floor(Math.random() * 100)} watchers
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="flex gap-3 mt-6">
+                  <Button asChild className="bg-portfolio-accent hover:bg-portfolio-highlight">
+                    <a 
+                      href={repo.html_url} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Github className="h-4 w-4 mr-2" />
+                      View on GitHub
+                    </a>
+                  </Button>
+                  
+                  {repo.homepage && (
+                    <Button asChild variant="outline">
+                      <a 
+                        href={repo.homepage} 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Live Demo
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+
+  const renderAccordionProject = (repo: Repository) => (
+    <AccordionItem key={repo.id} value={`repo-${repo.id}`} className="glass-card mb-4 overflow-hidden">
+      <AccordionTrigger className="px-4 py-2 hover:no-underline">
+        <div className="flex items-center justify-between w-full pr-4">
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg font-medium">{repo.name}</h3>
+            {repo.language && (
+              <Badge variant="outline" className={`${getLanguageColor(repo.language)}`}>
+                {repo.language}
+              </Badge>
+            )}
+          </div>
+          <div className="flex items-center space-x-2 text-portfolio-light">
+            <span className="flex items-center text-xs">
+              <Star className="h-3.5 w-3.5 mr-1" />
+              {repo.stargazers_count}
+            </span>
+            <span className="flex items-center text-xs">
+              <GitFork className="h-3.5 w-3.5 mr-1" />
+              {repo.forks_count}
+            </span>
+          </div>
+        </div>
+      </AccordionTrigger>
+      <AccordionContent className="px-4 pb-4">
+        <div className="space-y-3">
+          <p className="text-portfolio-light">
+            {repo.description || 'No description provided'}
+          </p>
+          
+          <div className="flex flex-wrap gap-1 mt-2">
+            {repo.topics?.map((topic) => (
+              <Badge key={topic} variant="secondary" className="bg-portfolio-dark/50 text-xs">
+                {topic}
+              </Badge>
+            ))}
+          </div>
+          
+          <div className="flex gap-3 mt-4">
+            <Button asChild size="sm" className="bg-portfolio-accent hover:bg-portfolio-highlight">
+              <a 
+                href={repo.html_url} 
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="h-4 w-4 mr-2" />
+                View on GitHub
+              </a>
+            </Button>
+            
+            {repo.homepage && (
+              <Button asChild size="sm" variant="outline">
+                <a 
+                  href={repo.homepage} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Live Demo
+                </a>
+              </Button>
+            )}
+            
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <MoreVertical className="h-4 w-4 mr-1" />
+                  Details
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="glass-card max-w-3xl">
+                {/* ... keep existing code (Dialog content) */}
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
+      </AccordionContent>
+    </AccordionItem>
+  );
 
   return (
     <section id="projects" className="py-20">
@@ -205,140 +419,17 @@ const Projects = () => {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRepos.map((repo) => (
-              <Card key={repo.id} className="project-card glass-card overflow-hidden h-full flex flex-col">
-                <CardHeader>
-                  <div className="flex justify-between items-start mb-2">
-                    {repo.language && (
-                      <Badge variant="outline" className={`${getLanguageColor(repo.language)}`}>
-                        {repo.language}
-                      </Badge>
-                    )}
-                    <div className="flex items-center space-x-2 text-portfolio-light">
-                      <span className="flex items-center text-xs">
-                        <Star className="h-3.5 w-3.5 mr-1" />
-                        {repo.stargazers_count}
-                      </span>
-                      <span className="flex items-center text-xs">
-                        <GitFork className="h-3.5 w-3.5 mr-1" />
-                        {repo.forks_count}
-                      </span>
-                    </div>
-                  </div>
-                  <CardTitle className="text-xl">{repo.name}</CardTitle>
-                  <CardDescription className="text-portfolio-light line-clamp-2">
-                    {repo.description || 'No description provided'}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <div className="flex flex-wrap gap-1 mt-2">
-                    {repo.topics?.slice(0, 4).map((topic) => (
-                      <Badge key={topic} variant="secondary" className="bg-portfolio-dark/50 text-xs">
-                        {topic}
-                      </Badge>
-                    ))}
-                    {repo.topics?.length > 4 && (
-                      <Badge variant="secondary" className="bg-portfolio-dark/50 text-xs">
-                        +{repo.topics.length - 4} more
-                      </Badge>
-                    )}
-                  </div>
-                </CardContent>
-                <CardFooter className="pt-0">
-                  <div className="flex items-center justify-between w-full">
-                    <a 
-                      href={repo.html_url} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center text-portfolio-light hover:text-portfolio-accent transition-colors text-sm"
-                    >
-                      <Github className="h-4 w-4 mr-1" />
-                      View Repository
-                    </a>
-                    
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <MoreVertical className="h-4 w-4 mr-1" />
-                          Details
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="glass-card max-w-3xl">
-                        <DialogHeader>
-                          <DialogTitle className="text-xl flex items-center">
-                            <Code2 className="h-5 w-5 mr-2 text-portfolio-accent" />
-                            {repo.name}
-                          </DialogTitle>
-                          <DialogDescription className="text-portfolio-light">
-                            {repo.description}
-                          </DialogDescription>
-                        </DialogHeader>
-                        
-                        <div className="space-y-4 mt-4">
-                          <div className="flex flex-wrap gap-2">
-                            {repo.language && (
-                              <Badge className={`${getLanguageColor(repo.language)}`}>
-                                {repo.language}
-                              </Badge>
-                            )}
-                            {repo.topics?.map((topic) => (
-                              <Badge key={topic} variant="secondary" className="bg-portfolio-dark/50">
-                                {topic}
-                              </Badge>
-                            ))}
-                          </div>
-                          
-                          <div className="flex items-center justify-between text-portfolio-light">
-                            <div className="flex items-center space-x-4">
-                              <span className="flex items-center">
-                                <Star className="h-4 w-4 mr-1" />
-                                {repo.stargazers_count} stars
-                              </span>
-                              <span className="flex items-center">
-                                <GitFork className="h-4 w-4 mr-1" />
-                                {repo.forks_count} forks
-                              </span>
-                              <span className="flex items-center">
-                                <Eye className="h-4 w-4 mr-1" />
-                                {Math.floor(Math.random() * 100)} watchers
-                              </span>
-                            </div>
-                          </div>
-                          
-                          <div className="flex gap-3 mt-6">
-                            <Button asChild className="bg-portfolio-accent hover:bg-portfolio-highlight">
-                              <a 
-                                href={repo.html_url} 
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <Github className="h-4 w-4 mr-2" />
-                                View on GitHub
-                              </a>
-                            </Button>
-                            
-                            {repo.homepage && (
-                              <Button asChild variant="outline">
-                                <a 
-                                  href={repo.homepage} 
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  <ExternalLink className="h-4 w-4 mr-2" />
-                                  Live Demo
-                                </a>
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  </div>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+          <>
+            {isMobile ? (
+              <Accordion type="single" collapsible className="w-full">
+                {filteredRepos.map(renderAccordionProject)}
+              </Accordion>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredRepos.map(renderProjectCard)}
+              </div>
+            )}
+          </>
         )}
         
         {filteredRepos.length === 0 && !isLoading && !error && (

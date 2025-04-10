@@ -119,3 +119,12 @@ pre, code {
 .content-wrapper {
   @apply w-full max-w-full overflow-x-hidden;
 }
+
+/* Project Accordion Styling */
+.accordion-project {
+  @apply transition-all duration-300;
+}
+
+.accordion-project [data-state=open] {
+  @apply bg-portfolio-accent/10;
+}
