@@ -10,14 +10,14 @@ const Testimonials = () => {
       content: "I had the privilege of being a mentor to Georgios at Techover Academy, where I got to see him build and develop impressive systems. Georgios is a skilled web developer with the ability to quickly understand new technologies and implement them efficiently. I am convinced that Georgios will be an asset to any organization seeking a skilled web developer.",
       author: "Matt Bergström",
       position: "CTO, Techover",
-      avatarUrl: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" // Placeholder image
+      avatarUrl: "/lovable-uploads/3e7933d8-c630-4e00-adb8-e2d6aa026426.png"
     },
     {
       id: 2,
       content: "I am delighted to write this testimonial for Georgios, with whom I had the pleasure of working in a challenging environment where innovative solutions were required. During our collaboration, Georgios consistently demonstrated a unique combination of intelligence, creativity, and dedication, which greatly impressed me. I am sure Georgios will be a great contribution to any company he works for in the future.",
       author: "Nessim Bakir",
       position: "CTO, WastePick",
-      avatarUrl: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" // Placeholder image
+      avatarUrl: "/lovable-uploads/9938c47b-a569-4cdb-8db0-98591d9e79c0.png"
     }
   ];
 
