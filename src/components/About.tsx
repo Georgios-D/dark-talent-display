@@ -1,7 +1,6 @@
 
 import Introduction from './about/Introduction';
 import CodeSnippets from './about/CodeSnippets';
-import SkillsGrid from './about/SkillsGrid';
 
 const About = () => {
   return (
@@ -23,11 +22,6 @@ const About = () => {
           <div>
             <CodeSnippets />
           </div>
-        </div>
-
-        <div id="skills">
-          <h3 className="text-2xl font-bold mb-6 text-center">Technical <span className="gradient-text">Skills</span></h3>
-          <SkillsGrid />
         </div>
       </div>
     </section>
