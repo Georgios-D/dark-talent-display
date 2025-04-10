@@ -29,7 +29,7 @@ const CodeContent = ({ codeSnippets, activeTab, setActiveTab }: CodeContentProps
       {codeSnippets.map((snippet) => (
         <TabsContent key={snippet.language} value={snippet.language} className="m-0">
           <div className="h-[300px] bg-portfolio-dark/70 overflow-auto" style={{ overscrollBehaviorX: 'contain' }}>
-            <pre className="code-block text-sm font-fira-code p-4 w-full">
+            <pre className="text-sm font-fira-code p-4 w-full h-full">
               <code className="whitespace-pre inline-block min-w-max">{snippet.code}</code>
             </pre>
           </div>
