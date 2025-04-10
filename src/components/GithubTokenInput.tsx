@@ -21,13 +21,14 @@ const GithubTokenInput = () => {
         <Button 
           variant="outline" 
           size="sm" 
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 whitespace-nowrap"
         >
           <Info size={16} />
-          GitHub API Info
+          <span className="hidden sm:inline">GitHub API Info</span>
+          <span className="inline sm:hidden">Info</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md mx-4 max-w-[calc(100vw-2rem)]">
         <DialogHeader>
           <DialogTitle>Secure GitHub API Access</DialogTitle>
           <DialogDescription>

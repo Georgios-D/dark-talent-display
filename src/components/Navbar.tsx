@@ -38,17 +38,17 @@ const Navbar = () => {
         scrolled ? 'bg-portfolio-dark/80 py-3 shadow-lg' : 'bg-transparent py-5'
       )}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container mx-auto px-4 flex items-center justify-between">
         <a href="#home" className="flex items-center">
           <img 
             src="/lovable-uploads/b9cf70bd-5c9f-44ce-9c04-21cb8ee8c0ab.png" 
             alt="Georgios Dimitriadis Logo" 
-            className="h-14 w-auto" // Changed from h-12 to h-14 to make the logo a bit bigger
+            className="h-10 w-auto sm:h-14" // Responsive logo size
           />
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
           {navItems.map((item) => (
             <a
               key={item.label}
@@ -77,7 +77,7 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <nav className="md:hidden glass-card m-4 mt-2 p-4 animate-fade-in">
+        <nav className="md:hidden glass-card mx-4 mt-2 p-4 animate-fade-in">
           <div className="flex flex-col space-y-4">
             {navItems.map((item) => (
               <a
@@ -94,6 +94,7 @@ const Navbar = () => {
               target="_blank" 
               rel="noopener noreferrer"
               className="text-portfolio-light hover:text-white py-2"
+              onClick={() => setMobileMenuOpen(false)}
             >
               GitHub
             </a>
