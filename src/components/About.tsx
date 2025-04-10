@@ -23,6 +23,7 @@ const About = () => {
     {
       category: 'Backend',
       icon: <Server className="h-5 w-5 text-portfolio-highlight" />,
+      iconSize: 'small',
       items: [
         { name: 'PHP', level: 90 },
         { name: 'Node.js', level: 80 },
@@ -32,6 +33,7 @@ const About = () => {
     {
       category: 'Database',
       icon: <Database className="h-5 w-5 text-portfolio-highlight" />,
+      iconSize: 'small',
       items: [
         { name: 'MySQL', level: 85 },
       ],
@@ -293,7 +295,10 @@ LIMIT 10;`,
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skills.map((skillCategory) => (
-              <Card key={skillCategory.category} className="glass-card">
+              <Card 
+                key={skillCategory.category} 
+                className={`glass-card ${skillCategory.iconSize === 'small' ? 'col-span-1 md:col-span-1' : 'col-span-1 md:col-span-1'}`}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     {skillCategory.icon}
