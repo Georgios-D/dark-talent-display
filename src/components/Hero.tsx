@@ -1,4 +1,3 @@
-
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
@@ -15,7 +14,6 @@ const Hero = () => {
   const deletingSpeed = 50;
   const delayBetweenTexts = 1500;
   
-  // Get time of day for personalized greeting
   const getTimeBasedGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return "Good morning";
@@ -23,7 +21,6 @@ const Hero = () => {
     return "Good evening";
   };
 
-  // Social media links
   const socialLinks = [
     {
       name: 'GitHub',
@@ -42,7 +39,6 @@ const Hero = () => {
     },
   ];
   
-  // Advanced typing effect with sequential text rotation
   useEffect(() => {
     const text = texts[currentTextIndex];
     let timer;
@@ -59,7 +55,6 @@ const Hero = () => {
       timer = setTimeout(() => {
         setTypedText(text.substring(0, typedText.length + 1));
         if (typedText === text) {
-          // Pause at complete word before deleting
           setTimeout(() => {
             setIsDeleting(true);
           }, delayBetweenTexts);
@@ -72,7 +67,6 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen flex flex-col justify-center pt-16 pb-8 relative overflow-hidden">
-      {/* Background elements with animated blobs */}
       <div className="absolute inset-0 z-0 opacity-10">
         <div className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-portfolio-accent blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full bg-portfolio-highlight blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
@@ -80,7 +74,6 @@ const Hero = () => {
       
       <div className="container relative z-10">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 max-w-5xl mx-auto">
-          {/* Profile Image */}
           <div className="w-full md:w-auto md:flex-shrink-0 mb-6 md:mb-0 animate-fade-in">
             <div className="relative w-48 h-48 md:w-64 md:h-64 mx-auto md:mx-0">
               <div className="w-full h-full rounded-full overflow-hidden border-4 border-portfolio-accent/30 shadow-lg shadow-portfolio-accent/20">
@@ -94,7 +87,6 @@ const Hero = () => {
                 </Avatar>
               </div>
               
-              {/* Availability indicator */}
               <div className="absolute bottom-4 right-4 flex items-center bg-portfolio-dark/80 px-3 py-1 rounded-full border border-portfolio-accent/30">
                 <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
                 <span className="text-xs text-white">Available for hire</span>
@@ -102,9 +94,7 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Text Content */}
           <div className="flex-1">
-            {/* Personal Greeting */}
             <div className="mb-4 flex items-center animate-fade-in">
               <span className="text-xl text-portfolio-highlight font-medium mr-2">
                 {getTimeBasedGreeting()},
@@ -121,10 +111,9 @@ const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in">
-              I'm here to help you build with <span className="gradient-text">passion & expertise</span>
+              I'm here to help you build with <span className="gradient-text">passion & expertise in...</span>
             </h1>
             
-            {/* Typing effect container */}
             <div className="h-8 mb-6 bg-portfolio-accent/5 px-4 py-6 rounded-md border border-portfolio-accent/20 flex items-center">
               <p className="text-xl text-portfolio-light font-fira-code">
                 <span className="text-portfolio-highlight">&gt;</span> {typedText}
@@ -137,7 +126,6 @@ const Hero = () => {
               performance and exceptional user experience.
             </p>
             
-            {/* Action buttons and social links */}
             <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between items-start animate-fade-in">
               <div className="flex flex-wrap gap-4">
                 <a href="#projects">
@@ -150,7 +138,6 @@ const Hero = () => {
                 </Button>
               </div>
               
-              {/* Social Media Links */}
               <div className="flex gap-3 mt-4 sm:mt-0">
                 {socialLinks.map((link) => (
                   <a 
