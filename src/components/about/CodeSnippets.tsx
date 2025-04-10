@@ -117,6 +117,36 @@ $users = $db->query("SELECT * FROM users WHERE status = ?", ['active']);
 ?>`,
     },
     {
+      language: 'xml',
+      title: 'XML',
+      code: `<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+  <product id="1001" category="electronics">
+    <name>Smartphone X Pro</name>
+    <brand>TechCorp</brand>
+    <price currency="USD">899.99</price>
+    <specifications>
+      <screen size="6.5" type="OLED">
+        <resolution width="1440" height="3200">Quad HD+</resolution>
+        <refresh-rate>120Hz</refresh-rate>
+      </screen>
+      <processor cores="8">Snapdragon 8 Gen 2</processor>
+      <memory>
+        <ram>12GB</ram>
+        <storage>256GB</storage>
+      </memory>
+      <battery capacity="5000">Fast charging 45W</battery>
+    </specifications>
+    <available-colors>
+      <color>Midnight Black</color>
+      <color>Stellar Silver</color>
+      <color>Ocean Blue</color>
+    </available-colors>
+    <in-stock>true</in-stock>
+  </product>
+</catalog>`,
+    },
+    {
       language: 'sql',
       title: 'SQL',
       code: `-- Create a table for users
