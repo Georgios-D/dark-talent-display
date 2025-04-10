@@ -39,8 +39,12 @@ const Navbar = () => {
       )}
     >
       <div className="container flex items-center justify-between">
-        <a href="#home" className="text-2xl font-bold gradient-text">
-          Portfolio<span className="text-portfolio-accent">.</span>
+        <a href="#home" className="flex items-center">
+          <img 
+            src="/lovable-uploads/b9cf70bd-5c9f-44ce-9c04-21cb8ee8c0ab.png" 
+            alt="Georgios Dimitriadis Logo" 
+            className="h-10 w-auto"
+          />
         </a>
 
         {/* Desktop Navigation */}
