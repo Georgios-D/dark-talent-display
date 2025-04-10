@@ -121,10 +121,10 @@ const Hero = () => {
             </div>
             
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight animate-fade-in">
-              Creating <span className="gradient-text">digital experiences</span> that make an impact
+              I'm here to help you build with <span className="gradient-text">passion & expertise</span>
             </h1>
             
-            {/* Larger typing effect */}
+            {/* Typing effect container */}
             <div className="h-8 mb-6 bg-portfolio-accent/5 px-4 py-6 rounded-md border border-portfolio-accent/20 flex items-center">
               <p className="text-xl text-portfolio-light font-fira-code">
                 <span className="text-portfolio-highlight">&gt;</span> {typedText}
