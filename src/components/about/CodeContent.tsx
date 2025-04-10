@@ -32,10 +32,12 @@ const CodeContent = ({ codeSnippets, activeTab, setActiveTab }: CodeContentProps
     >
       {codeSnippets.map((snippet) => (
         <TabsContent key={snippet.language} value={snippet.language} className="m-0">
-          <ScrollArea className="h-[300px] overflow-auto">
-            <pre className="code-block text-sm font-fira-code p-4">
-              <code>{snippet.code}</code>
-            </pre>
+          <ScrollArea className="h-[300px] w-full overflow-auto">
+            <div className="min-w-full">
+              <pre className="code-block text-sm font-fira-code p-4 whitespace-pre overflow-x-auto w-full">
+                <code>{snippet.code}</code>
+              </pre>
+            </div>
           </ScrollArea>
         </TabsContent>
       ))}
