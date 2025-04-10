@@ -13,6 +13,14 @@ const Hero = () => {
   const deletingSpeed = 50;
   const delayBetweenTexts = 1500;
   
+  // Get time of day for personalized greeting
+  const getTimeBasedGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 18) return "Good afternoon";
+    return "Good evening";
+  };
+  
   // Advanced typing effect with sequential text rotation
   useEffect(() => {
     const text = texts[currentTextIndex];
@@ -71,6 +79,16 @@ const Hero = () => {
           
           {/* Text Content */}
           <div className="flex-1">
+            {/* Personal Greeting */}
+            <div className="mb-4 flex items-center animate-fade-in">
+              <span className="text-xl text-portfolio-highlight font-medium mr-2">
+                {getTimeBasedGreeting()},
+              </span>
+              <span className="text-xl text-portfolio-light">
+                I'm Georgios Dimitriadis
+              </span>
+            </div>
+            
             <div className="mb-4 inline-block animate-fade-in">
               <div className="px-4 py-1 border border-portfolio-accent/30 rounded-full bg-portfolio-accent/10 text-portfolio-light text-sm">
                 Full Stack Developer
