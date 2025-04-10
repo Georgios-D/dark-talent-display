@@ -1,8 +1,7 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
-import { BrainCircuit, Code2, Database, Layout, Server, Wrench, Globe, ShoppingBag } from 'lucide-react';
+import { BrainCircuit, Code2, Database, Layout, Server, Wrench, Globe, ShoppingBag, Search } from 'lucide-react';
 
 const About = () => {
   const skills = [
@@ -17,6 +16,7 @@ const About = () => {
         { name: 'Tailwind CSS', level: 90 },
         { name: 'Next.js', level: 80 },
         { name: 'jQuery', level: 85 },
+        { name: 'Knockout.js', level: 75 },
       ],
     },
     {
@@ -25,9 +25,6 @@ const About = () => {
       items: [
         { name: 'PHP', level: 90 },
         { name: 'Node.js', level: 80 },
-        { name: 'Express', level: 75 },
-        { name: 'Laravel', level: 85 },
-        { name: 'REST APIs', level: 90 },
       ],
     },
     {
@@ -35,10 +32,6 @@ const About = () => {
       icon: <Database className="h-5 w-5 text-portfolio-highlight" />,
       items: [
         { name: 'MySQL', level: 85 },
-        { name: 'PostgreSQL', level: 80 },
-        { name: 'MongoDB', level: 75 },
-        { name: 'Redis', level: 70 },
-        { name: 'ORM', level: 80 },
       ],
     },
     {
@@ -48,6 +41,7 @@ const About = () => {
         { name: 'Magento/Adobe Commerce', level: 85 },
         { name: 'E-commerce APIs', level: 80 },
         { name: 'Payment Gateways', level: 75 },
+        { name: 'Adobe Live Search', level: 80 },
       ],
     },
     {
@@ -61,13 +55,14 @@ const About = () => {
       ],
     },
     {
-      category: 'AI & Integration',
+      category: 'AI Experience',
       icon: <BrainCircuit className="h-5 w-5 text-portfolio-highlight" />,
       items: [
-        { name: 'Machine Learning', level: 75 },
-        { name: 'GPT Integration', level: 85 },
-        { name: 'AI App Development', level: 80 },
-        { name: 'API Integration', level: 90 },
+        { name: 'Adobe Live Search', level: 85 },
+        { name: 'ChatGPT', level: 80 },
+        { name: 'Lovable', level: 75 },
+        { name: 'Grok', level: 70 },
+        { name: 'Windsurf', level: 65 },
       ],
     },
   ];
@@ -256,11 +251,10 @@ LIMIT 10;`,
               <span className="tech-tag">JavaScript</span>
               <span className="tech-tag">PHP</span>
               <span className="tech-tag">SQL</span>
-              <span className="tech-tag">Laravel</span>
               <span className="tech-tag">Node.js</span>
+              <span className="tech-tag">Knockout.js</span>
               <span className="tech-tag">Magento</span>
-              <span className="tech-tag">AI Integration</span>
-              <span className="tech-tag">RESTful APIs</span>
+              <span className="tech-tag">Adobe Live Search</span>
             </div>
           </div>
           
