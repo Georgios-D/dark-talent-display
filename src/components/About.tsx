@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
@@ -19,24 +18,25 @@ const About = () => {
         { name: 'jQuery', level: 85 },
         { name: 'Knockout.js', level: 75 },
       ],
+      colSpan: 'col-span-1 md:col-span-1 lg:col-span-1',
     },
     {
       category: 'Backend',
       icon: <Server className="h-5 w-5 text-portfolio-highlight" />,
-      iconSize: 'small',
       items: [
         { name: 'PHP', level: 90 },
         { name: 'Node.js', level: 80 },
         { name: 'Composer', level: 85 },
       ],
+      colSpan: 'col-span-1 md:col-span-1 lg:col-span-1',
     },
     {
       category: 'Database',
       icon: <Database className="h-5 w-5 text-portfolio-highlight" />,
-      iconSize: 'small',
       items: [
         { name: 'MySQL', level: 85 },
       ],
+      colSpan: 'col-span-1 md:col-span-1 lg:col-span-1',
     },
     {
       category: 'E-commerce',
@@ -47,6 +47,7 @@ const About = () => {
         { name: 'Payment Gateways', level: 75 },
         { name: 'Adobe Live Search', level: 80 },
       ],
+      colSpan: 'col-span-1 md:col-span-1 lg:col-span-1',
     },
     {
       category: 'Tools & DevOps',
@@ -57,6 +58,7 @@ const About = () => {
         { name: 'Docker', level: 75 },
         { name: 'Require.js', level: 80 },
       ],
+      colSpan: 'col-span-1 md:col-span-1 lg:col-span-1',
     },
     {
       category: 'AI Experience',
@@ -66,6 +68,7 @@ const About = () => {
         { name: 'Lovable', level: 75 },
         { name: 'Windsurf', level: 65 },
       ],
+      colSpan: 'col-span-1 md:col-span-1 lg:col-span-1',
     },
   ];
 
@@ -293,36 +296,42 @@ LIMIT 10;`,
         <div id="skills">
           <h3 className="text-2xl font-bold mb-6 text-center">Technical <span className="gradient-text">Skills</span></h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.map((skillCategory) => (
-              <Card 
-                key={skillCategory.category} 
-                className={`glass-card ${skillCategory.iconSize === 'small' ? 'col-span-1 md:col-span-1' : 'col-span-1 md:col-span-1'}`}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    {skillCategory.icon}
-                    <h4 className="text-lg font-semibold ml-2">{skillCategory.category}</h4>
-                  </div>
-                  <div className="space-y-4">
-                    {skillCategory.items.map((skill) => (
-                      <div key={skill.name}>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm text-portfolio-light">{skill.name}</span>
-                          <span className="text-xs text-portfolio-light">{skill.level}%</span>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {skills.map((skillCategory) => {
+              const isSmallCard = 
+                skillCategory.category === 'Database' || 
+                skillCategory.category === 'Backend';
+              
+              return (
+                <Card 
+                  key={skillCategory.category} 
+                  className={`glass-card ${isSmallCard ? 'col-span-1' : skillCategory.colSpan}`}
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-center mb-4">
+                      {skillCategory.icon}
+                      <h4 className="text-lg font-semibold ml-2">{skillCategory.category}</h4>
+                    </div>
+                    <div className="space-y-4">
+                      {skillCategory.items.map((skill) => (
+                        <div key={skill.name}>
+                          <div className="flex justify-between mb-1">
+                            <span className="text-sm text-portfolio-light">{skill.name}</span>
+                            <span className="text-xs text-portfolio-light">{skill.level}%</span>
+                          </div>
+                          <div className="w-full bg-portfolio-dark/50 rounded-full h-1.5">
+                            <div 
+                              className="bg-gradient-to-r from-portfolio-accent to-portfolio-highlight h-1.5 rounded-full"
+                              style={{ width: `${skill.level}%` }}
+                            ></div>
+                          </div>
                         </div>
-                        <div className="w-full bg-portfolio-dark/50 rounded-full h-1.5">
-                          <div 
-                            className="bg-gradient-to-r from-portfolio-accent to-portfolio-highlight h-1.5 rounded-full"
-                            style={{ width: `${skill.level}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>
