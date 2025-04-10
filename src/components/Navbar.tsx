@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 import { Github, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// GitHub username constant - replace with your actual GitHub username
-const GITHUB_USERNAME = 'gdimitriad';
+// GitHub username constant - this will be used throughout the application
+export const GITHUB_USERNAME = 'Georgios-D';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);

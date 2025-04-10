@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import GithubTokenInput from './GithubTokenInput';
 import { supabase } from "@/integrations/supabase/client";
+import { GITHUB_USERNAME } from './Navbar';
 
 interface Repository {
   id: number;
@@ -29,23 +29,16 @@ const Projects = () => {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('All');
-  const [githubUsername, setGithubUsername] = useState<string>('');
   const { toast } = useToast();
 
-  const fetchRepositories = async (username: string) => {
-    if (!username) {
-      setError('Please enter a GitHub username');
-      setIsLoading(false);
-      return;
-    }
-    
+  const fetchRepositories = async () => {
     try {
       setIsLoading(true);
       setError('');
       
-      // Call the Supabase Edge Function
+      // Call the Supabase Edge Function with the static GitHub username
       const { data, error: functionError } = await supabase.functions.invoke('fetch-github-repos', {
-        body: { username }
+        body: { username: GITHUB_USERNAME }
       });
       
       if (functionError) {
@@ -83,11 +76,8 @@ const Projects = () => {
   };
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem('github_username');
-    if (storedUsername) {
-      setGithubUsername(storedUsername);
-      fetchRepositories(storedUsername);
-    }
+    // Load repositories on component mount using the static GitHub username
+    fetchRepositories();
   }, []);
 
   useEffect(() => {
@@ -111,24 +101,7 @@ const Projects = () => {
   const languages = ['All', ...Array.from(new Set(repos.map(repo => repo.language).filter(Boolean)))];
 
   const handleRefresh = () => {
-    fetchRepositories(githubUsername);
-  };
-
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGithubUsername(e.target.value);
-  };
-
-  const handleUsernameSubmit = () => {
-    if (githubUsername.trim()) {
-      localStorage.setItem('github_username', githubUsername);
-      fetchRepositories(githubUsername);
-    } else {
-      toast({
-        title: 'Error',
-        description: 'Please enter a valid GitHub username',
-        variant: 'destructive',
-      });
-    }
+    fetchRepositories();
   };
 
   const getLanguageColor = (language: string | null) => {
@@ -162,19 +135,7 @@ const Projects = () => {
             and the technologies I work with.
           </p>
           
-          <div className="flex flex-col items-center gap-3 mt-6 mb-8">
-            <div className="flex flex-col sm:flex-row items-center gap-3">
-              <Input
-                placeholder="GitHub Username"
-                value={githubUsername}
-                onChange={handleUsernameChange}
-                className="bg-portfolio-dark/30 border-portfolio-accent/30 w-full sm:max-w-xs"
-              />
-              <Button onClick={handleUsernameSubmit} disabled={isLoading}>
-                {isLoading ? 'Loading...' : 'Load Repositories'}
-              </Button>
-            </div>
-            
+          <div className="flex justify-center mt-6 mb-8">
             <GithubTokenInput />
           </div>
           

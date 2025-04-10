@@ -4,13 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { ExternalLink, Info } from 'lucide-react';
+import { GITHUB_USERNAME } from './Navbar';
 
 const GithubTokenInput = () => {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
   const handleOpenGitHub = () => {
-    window.open('https://github.com', '_blank');
+    window.open(`https://github.com/${GITHUB_USERNAME}`, '_blank');
     setOpen(false);
   };
 
@@ -30,21 +31,20 @@ const GithubTokenInput = () => {
         <DialogHeader>
           <DialogTitle>Secure GitHub API Access</DialogTitle>
           <DialogDescription>
-            This application uses a secure server-side connection to GitHub's API with authentication.
+            This application fetches repositories from {GITHUB_USERNAME}'s GitHub account using a secure server-side connection.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
           <p className="text-sm text-muted-foreground">
-            Your requests are securely routed through a server using a GitHub token, 
-            which allows for higher rate limits (5,000 requests per hour) and 
-            protects the token from being exposed in the browser.
+            Repository data is securely fetched through a server using GitHub's API, 
+            which allows for higher rate limits and protects any authentication tokens from being exposed.
           </p>
           <div className="flex justify-center">
             <Button 
               variant="default" 
               onClick={handleOpenGitHub}
             >
-              Open GitHub
+              View GitHub Profile
             </Button>
           </div>
         </div>
