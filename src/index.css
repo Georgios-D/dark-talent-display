@@ -66,6 +66,11 @@
   @apply bg-portfolio-dark/70 p-4 rounded-md my-4 overflow-x-auto border border-portfolio-accent/30;
 }
 
+.touch-action-pan-x {
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
 .tech-tag {
   @apply px-3 py-1 rounded-full text-sm font-medium bg-portfolio-accent/20 text-portfolio-light border border-portfolio-accent/30 transition-all hover:bg-portfolio-accent/30;
 }
@@ -112,7 +117,7 @@
 
 /* Ensure code blocks don't overflow on mobile */
 pre, code {
-  @apply max-w-full overflow-x-auto;
+  @apply max-w-full;
 }
 
 /* Content width limiter */
