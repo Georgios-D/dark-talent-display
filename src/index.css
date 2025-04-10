@@ -63,7 +63,7 @@
 
 .code-block {
   font-family: 'Fira Code', monospace;
-  @apply bg-portfolio-dark/70 p-4 rounded-md my-4 border border-portfolio-accent/30;
+  @apply p-4 rounded-md my-4 border border-portfolio-accent/30 bg-portfolio-dark/70;
 }
 
 .touch-action-pan-x {
