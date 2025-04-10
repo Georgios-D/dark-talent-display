@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
@@ -25,6 +26,7 @@ const About = () => {
       items: [
         { name: 'PHP', level: 90 },
         { name: 'Node.js', level: 80 },
+        { name: 'Composer', level: 85 },
       ],
     },
     {
@@ -59,9 +61,7 @@ const About = () => {
       icon: <BrainCircuit className="h-5 w-5 text-portfolio-highlight" />,
       items: [
         { name: 'Adobe Live Search', level: 85 },
-        { name: 'ChatGPT', level: 80 },
         { name: 'Lovable', level: 75 },
-        { name: 'Grok', level: 70 },
         { name: 'Windsurf', level: 65 },
       ],
     },
@@ -255,6 +255,7 @@ LIMIT 10;`,
               <span className="tech-tag">Knockout.js</span>
               <span className="tech-tag">Magento</span>
               <span className="tech-tag">Adobe Live Search</span>
+              <span className="tech-tag">Composer</span>
             </div>
           </div>
           
