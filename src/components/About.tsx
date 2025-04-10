@@ -1,7 +1,8 @@
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BrainCircuit, Code2, Database, Layout, Server } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { BrainCircuit, Code2, Database, Layout, Server, Wrench, Globe, ShoppingBag } from 'lucide-react';
 
 const About = () => {
   const skills = [
@@ -11,9 +12,11 @@ const About = () => {
       items: [
         { name: 'React', level: 90 },
         { name: 'TypeScript', level: 85 },
+        { name: 'JavaScript', level: 95 },
         { name: 'HTML/CSS', level: 95 },
         { name: 'Tailwind CSS', level: 90 },
         { name: 'Next.js', level: 80 },
+        { name: 'jQuery', level: 85 },
       ],
     },
     {
@@ -39,14 +42,32 @@ const About = () => {
       ],
     },
     {
-      category: 'AI & Tools',
+      category: 'E-commerce',
+      icon: <ShoppingBag className="h-5 w-5 text-portfolio-highlight" />,
+      items: [
+        { name: 'Magento/Adobe Commerce', level: 85 },
+        { name: 'E-commerce APIs', level: 80 },
+        { name: 'Payment Gateways', level: 75 },
+      ],
+    },
+    {
+      category: 'Tools & DevOps',
+      icon: <Wrench className="h-5 w-5 text-portfolio-highlight" />,
+      items: [
+        { name: 'Git', level: 90 },
+        { name: 'GitHub', level: 85 },
+        { name: 'Docker', level: 75 },
+        { name: 'Require.js', level: 80 },
+      ],
+    },
+    {
+      category: 'AI & Integration',
       icon: <BrainCircuit className="h-5 w-5 text-portfolio-highlight" />,
       items: [
         { name: 'Machine Learning', level: 75 },
-        { name: 'TensorFlow', level: 65 },
         { name: 'GPT Integration', level: 85 },
         { name: 'AI App Development', level: 80 },
-        { name: 'Docker', level: 75 },
+        { name: 'API Integration', level: 90 },
       ],
     },
   ];
@@ -232,10 +253,12 @@ LIMIT 10;`,
             <div className="flex flex-wrap gap-2 mt-6">
               <span className="tech-tag">React</span>
               <span className="tech-tag">TypeScript</span>
+              <span className="tech-tag">JavaScript</span>
               <span className="tech-tag">PHP</span>
               <span className="tech-tag">SQL</span>
               <span className="tech-tag">Laravel</span>
               <span className="tech-tag">Node.js</span>
+              <span className="tech-tag">Magento</span>
               <span className="tech-tag">AI Integration</span>
               <span className="tech-tag">RESTful APIs</span>
             </div>
@@ -273,7 +296,7 @@ LIMIT 10;`,
         <div id="skills">
           <h3 className="text-2xl font-bold mb-6 text-center">Technical <span className="gradient-text">Skills</span></h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skills.map((skillCategory) => (
               <Card key={skillCategory.category} className="glass-card">
                 <CardContent className="p-6">
