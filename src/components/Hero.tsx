@@ -65,9 +65,7 @@ const Hero = () => {
                 </Avatar>
               </div>
               
-              <div className="absolute -bottom-2 -right-2 bg-portfolio-dark p-2 rounded-full border border-portfolio-accent/30">
-                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse-light"></div>
-              </div>
+              {/* Green dot indicator removed */}
             </div>
           </div>
           
