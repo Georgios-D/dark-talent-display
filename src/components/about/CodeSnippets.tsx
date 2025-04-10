@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Code2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useEffect, useRef, useState } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface CodeSnippet {
   language: string;
@@ -14,6 +15,15 @@ interface CodeSnippet {
 const CodeSnippets = () => {
   const [activeTab, setActiveTab] = useState('typescript');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+  
+  // Touch handling state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
   
   const codeSnippets: CodeSnippet[] = [
     {
@@ -212,6 +222,49 @@ LIMIT 10;`,
       container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
+  
+  // Get index of current active tab
+  const getCurrentTabIndex = () => {
+    return codeSnippets.findIndex(snippet => snippet.language === activeTab);
+  };
+  
+  // Navigate to next or previous tab
+  const navigateTab = (direction: 'next' | 'prev') => {
+    const currentIndex = getCurrentTabIndex();
+    const totalTabs = codeSnippets.length;
+    
+    if (direction === 'next') {
+      const nextIndex = (currentIndex + 1) % totalTabs;
+      setActiveTab(codeSnippets[nextIndex].language);
+    } else {
+      const prevIndex = (currentIndex - 1 + totalTabs) % totalTabs;
+      setActiveTab(codeSnippets[prevIndex].language);
+    }
+  };
+  
+  // Touch event handlers
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+  
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+  
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      navigateTab('next');
+    } else if (isRightSwipe) {
+      navigateTab('prev');
+    }
+  };
 
   return (
     <Card className="glass-card overflow-hidden">
@@ -255,15 +308,22 @@ LIMIT 10;`,
             </button>
           </div>
           
-          {codeSnippets.map((snippet) => (
-            <TabsContent key={snippet.language} value={snippet.language} className="m-0">
-              <ScrollArea className="max-h-[300px]">
-                <pre className="code-block text-sm font-fira-code">
-                  <code>{snippet.code}</code>
-                </pre>
-              </ScrollArea>
-            </TabsContent>
-          ))}
+          <div 
+            ref={tabsContainerRef}
+            onTouchStart={isMobile ? onTouchStart : undefined}
+            onTouchMove={isMobile ? onTouchMove : undefined}
+            onTouchEnd={isMobile ? onTouchEnd : undefined}
+          >
+            {codeSnippets.map((snippet) => (
+              <TabsContent key={snippet.language} value={snippet.language} className="m-0">
+                <ScrollArea className="max-h-[300px]">
+                  <pre className="code-block text-sm font-fira-code">
+                    <code>{snippet.code}</code>
+                  </pre>
+                </ScrollArea>
+              </TabsContent>
+            ))}
+          </div>
         </Tabs>
       </CardContent>
     </Card>
