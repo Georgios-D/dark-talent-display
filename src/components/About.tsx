@@ -26,7 +26,7 @@ const About = () => {
 
         <div className="mt-16">
           <h3 className="text-2xl font-bold mb-6 text-center">My <span className="gradient-text">Tech Stack</span></h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Front-end Card */}
             <div className="glass-card p-6 hover:shadow-lg transition-all duration-300">
               <h4 className="text-lg font-semibold mb-3 flex items-center">
