@@ -27,6 +27,7 @@ const SkillsGrid = () => {
         { name: 'Next.js', level: 80 },
         { name: 'jQuery', level: 85 },
         { name: 'Knockout.js', level: 75 },
+        { name: 'Liquid', level: 80 },
       ],
     },
     {
@@ -36,6 +37,8 @@ const SkillsGrid = () => {
         { name: 'PHP', level: 90 },
         { name: 'Node.js', level: 80 },
         { name: 'Composer', level: 85 },
+        { name: 'Apache/Nginx', level: 75 },
+        { name: 'XML', level: 85 },
       ],
     },
     {
@@ -47,6 +50,7 @@ const SkillsGrid = () => {
         { name: 'E-commerce APIs', level: 80 },
         { name: 'Payment Gateways', level: 75 },
         { name: 'Adobe Live Search', level: 80 },
+        { name: 'Elasticsearch/OpenSearch', level: 80 },
       ],
     },
     {
